@@ -125,3 +125,41 @@ def test_parse_json_from_llm_fallbacks() -> None:
     raw = "Here is the extracted bill:\n{\"provider\": \"KE\", \"tariff\": \"A1-R\"}\nHope this helps!"
     parsed = parse_json_from_llm(raw)
     assert parsed == {"provider": "KE", "tariff": "A1-R"}
+
+
+def test_sanity_warning_triggers_retry_and_keeps_improved(tmp_path: Path) -> None:
+    """Sanity check warnings trigger retry, and improved result with fewer warnings is kept."""
+    test_img = _create_test_image(tmp_path / "test_bill.png")
+    mock_client = MagicMock(spec=LLMClient)
+
+    # 1st call: units mismatch (curr 100 - prev 0 != units 50)
+    # 2nd call: fixed units (curr 100 - prev 0 == units 100)
+    mock_client.generate.side_effect = [
+        '{"provider": "KE", "previous_reading": 0, "current_reading": 100, "units_consumed": 50}',
+        '{"provider": "KE", "previous_reading": 0, "current_reading": 100, "units_consumed": 100}',
+    ]
+
+    result = extract_level1(test_img, client=mock_client)
+
+    assert result["units_consumed"] == 100
+    assert mock_client.generate.call_count == 2
+    retry_prompt = mock_client.generate.call_args_list[1].kwargs["prompt"]
+    assert "Sanity validation detected potential inconsistencies" in retry_prompt
+
+
+def test_sanity_warning_keeps_original_if_no_improvement(tmp_path: Path) -> None:
+    """If retry fails or does not reduce warnings, original extraction is retained."""
+    test_img = _create_test_image(tmp_path / "test_bill.png")
+    mock_client = MagicMock(spec=LLMClient)
+
+    mock_client.generate.side_effect = [
+        '{"provider": "KE", "previous_reading": 0, "current_reading": 100, "units_consumed": 50}',
+        "Broken retry response that fails to parse",
+    ]
+
+    result = extract_level1(test_img, client=mock_client)
+
+    assert result["provider"] == "KE"
+    assert result["units_consumed"] == 50
+    assert mock_client.generate.call_count == 2
+

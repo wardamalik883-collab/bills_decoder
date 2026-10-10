@@ -12,7 +12,7 @@ Legend: `[ ]` todo, `[~]` in progress, `[x]` done. Time = rough estimate.
 - [x] [T04 - LLM client abstraction](tasks/T04-llm-client.md) (15 min)
 - [x] [T05 - Schema and extraction prompt](tasks/T05-schema-and-prompt.md) (20 min)
 - [x] [T06 - Extractor](tasks/T06-extractor.md) (15 min)
-- [ ] [T07 - Validator, retry and evaluation](tasks/T07-validator-and-eval.md) (25 min)
+- [x] [T07 - Validator, retry and evaluation](tasks/T07-validator-and-eval.md) (25 min)
 
 ## Phase C: Level 2 Q&A (11:50 - 12:15)
 - [ ] [T08 - Context extraction and calc tools](tasks/T08-context-and-calc-tools.md) (15 min)
@@ -36,6 +36,6 @@ Legend: `[ ]` todo, `[~]` in progress, `[x]` done. Time = rough estimate.
 - [ ] [T18 - Demo video (max 3 min)](tasks/T18-demo-video.md) (10 min, +5 pts)
 
 ## Current status
-- Last completed task: T06 - Extractor
+- Last completed task: T07 - Validator, retry and evaluation
 - Currently blocked on: _nothing_
 - Notes: _write here when you pause so you can resume quickly_
