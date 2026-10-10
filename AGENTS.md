@@ -14,7 +14,10 @@ All AI assistants working on this codebase must follow these standing rules:
    - Only use allowed models: `gemini-3.1-flash-lite`, `gemini-3.5-flash-lite`, `gpt-4.1-mini`, `gpt-5-mini`, `claude-haiku-4-5`.
    - Always read the model name dynamically from the `MODEL_NAME` environment variable without hardcoded fallback.
 
-4. **Task Completion & Git Workflow**:
+4. **File Deletion Restriction**:
+   - Never delete files or folders without asking me first.
+
+5. **Task Completion & Git Workflow**:
    - After each task is finished:
      1. Tick the task checkbox in `task.md`.
      2. Stage changes: `git add .`
@@ -24,8 +27,8 @@ All AI assistants working on this codebase must follow these standing rules:
      6. Push to remote: `git push origin main`.
      7. Show the files changed and commit result.
 
-5. **Push Failure Handling**:
+6. **Push Failure Handling**:
    - If `git push` fails, display the error message without exposing any token or credential, and stop.
 
-6. **User Verification**:
+7. **User Verification**:
    - Always end each response with clear instructions on how the user can verify the task themselves.
