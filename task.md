@@ -6,7 +6,7 @@ Legend: `[ ]` todo, `[~]` in progress, `[x]` done. Time = rough estimate.
 ## Phase A: Setup (10:30 - 11:00)
 - [x] [T01 - API key and test call](tasks/T01-api-key-and-test-call.md) (10 min)
 - [x] [T02 - Project skeleton and config](tasks/T02-project-skeleton.md) (15 min)
-- [ ] [T03 - Study training bills and build ground truth](tasks/T03-study-training-bills.md) (20 min)
+- [x] [T03 - Study training bills and build ground truth](tasks/T03-study-training-bills.md) (20 min)
 
 ## Phase B: Level 1 Extraction (11:00 - 11:50)
 - [ ] [T04 - LLM client abstraction](tasks/T04-llm-client.md) (15 min)
@@ -36,6 +36,6 @@ Legend: `[ ]` todo, `[~]` in progress, `[x]` done. Time = rough estimate.
 - [ ] [T18 - Demo video (max 3 min)](tasks/T18-demo-video.md) (10 min, +5 pts)
 
 ## Current status
-- Last completed task: T02 - Project skeleton and config
+- Last completed task: T03 - Study training bills and build ground truth
 - Currently blocked on: _nothing_
 - Notes: _write here when you pause so you can resume quickly_
