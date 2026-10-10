@@ -10,6 +10,11 @@ import glob
 import sys
 from pathlib import Path
 
+# Add src to sys.path so bill_decoder can be imported directly
+SRC_DIR = Path(__file__).resolve().parent.parent / "src"
+if str(SRC_DIR) not in sys.path:
+    sys.path.insert(0, str(SRC_DIR))
+
 from bill_decoder.llm_client import generate
 
 # ── Pick the first image in data/train/bills/ ─────────────────────────────────
