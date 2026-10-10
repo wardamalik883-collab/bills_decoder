@@ -9,7 +9,7 @@ Legend: `[ ]` todo, `[~]` in progress, `[x]` done. Time = rough estimate.
 - [x] [T03 - Study training bills and build ground truth](tasks/T03-study-training-bills.md) (20 min)
 
 ## Phase B: Level 1 Extraction (11:00 - 11:50)
-- [ ] [T04 - LLM client abstraction](tasks/T04-llm-client.md) (15 min)
+- [x] [T04 - LLM client abstraction](tasks/T04-llm-client.md) (15 min)
 - [ ] [T05 - Schema and extraction prompt](tasks/T05-schema-and-prompt.md) (20 min)
 - [ ] [T06 - Extractor](tasks/T06-extractor.md) (15 min)
 - [ ] [T07 - Validator, retry and evaluation](tasks/T07-validator-and-eval.md) (25 min)
@@ -36,6 +36,6 @@ Legend: `[ ]` todo, `[~]` in progress, `[x]` done. Time = rough estimate.
 - [ ] [T18 - Demo video (max 3 min)](tasks/T18-demo-video.md) (10 min, +5 pts)
 
 ## Current status
-- Last completed task: T03 - Study training bills and build ground truth
+- Last completed task: T04 - LLM client abstraction
 - Currently blocked on: _nothing_
 - Notes: _write here when you pause so you can resume quickly_
