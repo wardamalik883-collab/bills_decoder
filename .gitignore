@@ -7,7 +7,7 @@ build/
 dist/
 cache/
 data/
-output/*.csv
+output/
 *.zip
 .vscode/
 .idea/

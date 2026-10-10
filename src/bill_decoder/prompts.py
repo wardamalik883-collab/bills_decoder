@@ -101,3 +101,79 @@ EXTRACTION_USER_PROMPT = (
     "Extract all Level 1 fields from this electricity bill image into structured JSON "
     "according to the extraction rules and schema. Return valid JSON only."
 )
+
+CONTEXT_SYSTEM_PROMPT = """You collect extra contextual facts from a Pakistani electricity bill image
+to help answer customer questions later. Read the bill carefully (it may be tilted or contain Urdu text)
+and return a single valid JSON object. Never include personal identifiers (names, addresses, CNIC,
+account/reference/consumer/meter numbers). Use null or [] when information is not printed. Do not invent values.
+
+Return JSON with this exact structure:
+{
+  "usage_history": [{"month": "YYYY-MM", "units": 123}],
+  "billing_history": [{"month": "YYYY-MM", "billed_amount": 123, "pay_date": "YYYY-MM-DD", "paid_amount": 123}],
+  "tax_percent": 16.6,
+  "energy_percent": null,
+  "message_board": "short English summary or null",
+  "late_surcharge_notes": "short English summary or null",
+  "line_items": [{"label": "Fixed Charges", "amount": 900}]
+}
+Rules:
+- usage_history: the 12/13-month consumption history table (month -> units) if printed.
+- billing_history: billing/payment history table if printed.
+- tax_percent / energy_percent: printed percentage split of taxes / energy, if shown.
+- line_items: all printed charge and tax line labels with their amounts.
+- Output JSON only, no prose."""
+
+CONTEXT_USER_PROMPT = (
+    "Extract the contextual history and metadata JSON from this electricity bill image "
+    "according to the rules. Return valid JSON only."
+)
+
+QA_SYSTEM_PROMPT = """You are a helpful assistant answering a customer's questions about ONE Pakistani
+electricity bill. Answer in plain English, grounded ONLY in the provided bill data and image.
+
+Rules:
+1. Ground every answer in the bill data provided (Level 1 JSON, context, and pre-computed numbers). Never use outside tariff/rate knowledge.
+2. If the bill does not show a value needed to answer, state clearly that the information is not available on the bill.
+3. Label any estimate with the word "estimate" and briefly explain how it was calculated.
+4. For ambiguous questions, state your interpretation, or answer both interpretations.
+5. Never include personal identifiers.
+6. Be concise and specific: give numbers with units (PKR, kWh/units).
+7. Return a single JSON object mapping each question id to a string answer, e.g. {"Q1": "...", "Q2": "..."}.
+   Every provided question id must appear exactly once. Use valid JSON only, no prose around it.
+"""
+
+QA_USER_PROMPT_TEMPLATE = """Bill image is attached. Use it together with the data below to answer the questions.
+
+LEVEL 1 BILL JSON:
+{bill_json}
+
+CONTEXT (histories, printed splits, line items):
+{context_json}
+
+PRE-COMPUTED HELPER NUMBERS (quote these instead of computing):
+{helpers_json}
+
+QUESTIONS (JSON mapping of question_id to question text):
+{questions_json}
+
+Return a JSON object mapping each question_id to a concise English answer string."""
+
+
+def build_context_prompt() -> str:
+    return CONTEXT_USER_PROMPT
+
+
+def build_qa_prompt(
+    bill_json: str,
+    context_json: str,
+    helpers_json: str,
+    questions_json: str,
+) -> str:
+    """Fill the Q&A user prompt template with serialized inputs."""
+    return QA_USER_PROMPT_TEMPLATE.format(
+        bill_json=bill_json,
+        context_json=context_json,
+        helpers_json=helpers_json,
+        questions_json=questions_json,
+    )
